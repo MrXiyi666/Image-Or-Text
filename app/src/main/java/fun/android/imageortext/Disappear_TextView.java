@@ -14,6 +14,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import fun.android.imageortext.drawable.CakeDrawable;
+import fun.android.imageortext.drawable.CircleDrawable;
+import fun.android.imageortext.drawable.CrossDrawable;
+import fun.android.imageortext.drawable.DiamondDrawable;
+import fun.android.imageortext.drawable.FlowerDrawable;
+import fun.android.imageortext.drawable.HexagonDrawable;
+import fun.android.imageortext.drawable.PentagonDrawable;
+import fun.android.imageortext.drawable.RingDrawable;
+import fun.android.imageortext.drawable.RoundedRectDrawable;
+import fun.android.imageortext.drawable.SquareDrawable;
+import fun.android.imageortext.drawable.StarDrawable;
+import fun.android.imageortext.drawable.TriangleDrawable;
+
 public class Disappear_TextView extends StrokeTextView {
     public void setView(RelativeLayout relati_view){
 
@@ -66,19 +79,18 @@ public class Disappear_TextView extends StrokeTextView {
 
     private Drawable getDrawable(){
         int color = Color.parseColor(color_list.get(Fun.随机数(0, color_list.size()-1)));
-        return switch (Fun.随机数(0, 12)) {
-            case 0 ->//向上三角形
+        return switch (Fun.随机数(0, 14)) {
+            case 0 ->
                     new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.UP);
-            case 1 ->//向右三角形
+            case 1 ->
                     new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.RIGHT);
-            case 2 ->//向下三角形
+            case 2 ->
                     new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.DOWN);
-            case 3 ->//向左三角形
+            case 3 ->
                     new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.LEFT);
-            case 4 ->//五角星
+            case 4 ->
                     new StarDrawable(color, 10f);
             case 5 ->
-
                     new SquareDrawable(color, 10f);
             case 6 ->
                     new RoundedRectDrawable(color, 10f, 10f);
@@ -92,6 +104,10 @@ public class Disappear_TextView extends StrokeTextView {
                     new CrossDrawable(color, 10f, 2f);
             case 11 ->
                     new RingDrawable(color, 10f, 2f);
+            case 12 ->
+                    new FlowerDrawable(color, 10f);
+            case 13 ->
+                    new CakeDrawable(color, 10f);
             default ->//圆形
                     new CircleDrawable(color, 10f);
         };

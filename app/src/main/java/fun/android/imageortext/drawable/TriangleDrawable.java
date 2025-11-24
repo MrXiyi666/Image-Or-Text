@@ -1,4 +1,4 @@
-package fun.android.imageortext;
+package fun.android.imageortext.drawable;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;

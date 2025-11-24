@@ -1,9 +1,10 @@
-package fun.android.imageortext;
+package fun.android.imageortext.drawable;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -11,24 +12,18 @@ import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
 
-public class CrossDrawable extends Drawable {
+public class HexagonDrawable extends Drawable {
     private final Paint mPaint;
+    private final Path mHexagonPath;
     private final float mSizePx;
-    private final float mLineWidthPx; // 线条宽度（dp 转换后）
 
-    /**
-     * @param color 颜色
-     * @param sizeDp 整体大小（10dp）
-     * @param lineWidthDp 线条宽度（如 2dp）
-     */
-    public CrossDrawable(int color, float sizeDp, float lineWidthDp) {
+    public HexagonDrawable(int color, float sizeDp) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(color);
-        mPaint.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, lineWidthDp, Resources.getSystem().getDisplayMetrics()));
-        mPaint.setStrokeCap(Paint.Cap.ROUND); // 线条端点圆角
 
         mSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeDp, Resources.getSystem().getDisplayMetrics());
-        mLineWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, lineWidthDp, Resources.getSystem().getDisplayMetrics());
+        mHexagonPath = new Path();
     }
 
     @Override
@@ -38,12 +33,20 @@ public class CrossDrawable extends Drawable {
 
         float centerX = bounds.exactCenterX();
         float centerY = bounds.exactCenterY();
-        float halfLength = (mSizePx - mLineWidthPx) / 2f; // 线条长度（减去线宽避免超出边界）
+        float radius = mSizePx / 2f; // 外接圆半径
+        mHexagonPath.reset();
 
-        // 绘制水平线（左右方向）
-        canvas.drawLine(centerX - halfLength, centerY, centerX + halfLength, centerY, mPaint);
-        // 绘制垂直线（上下方向）
-        canvas.drawLine(centerX, centerY - halfLength, centerX, centerY + halfLength, mPaint);
+        // 正六边形顶点角度：间隔 60°
+        for (int i = 0; i < 6; i++) {
+            float angle = (float) (Math.PI * 2 * i / 6 - Math.PI / 2);
+            float x = centerX + radius * (float) Math.cos(angle);
+            float y = centerY + radius * (float) Math.sin(angle);
+            if (i == 0) mHexagonPath.moveTo(x, y);
+            else mHexagonPath.lineTo(x, y);
+        }
+        mHexagonPath.close();
+
+        canvas.drawPath(mHexagonPath, mPaint);
     }
 
     @Override public void setAlpha(int alpha) { mPaint.setAlpha(alpha); invalidateSelf(); }

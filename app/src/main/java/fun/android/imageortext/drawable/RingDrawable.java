@@ -1,10 +1,9 @@
-package fun.android.imageortext;
+package fun.android.imageortext.drawable;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -12,18 +11,24 @@ import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
 
-public class PentagonDrawable extends Drawable {
+public class RingDrawable extends Drawable {
     private final Paint mPaint;
-    private final Path mPentagonPath;
     private final float mSizePx;
+    private final float mRingWidthPx; // 圆环宽度（dp 转换后）
 
-    public PentagonDrawable(int color, float sizeDp) {
+    /**
+     * @param color 圆环颜色
+     * @param sizeDp 整体大小（10dp）
+     * @param ringWidthDp 圆环宽度（如 2dp）
+     */
+    public RingDrawable(int color, float sizeDp, float ringWidthDp) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(color);
+        mPaint.setStyle(Paint.Style.STROKE); // 空心样式
+        mPaint.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ringWidthDp, Resources.getSystem().getDisplayMetrics()));
 
         mSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeDp, Resources.getSystem().getDisplayMetrics());
-        mPentagonPath = new Path();
+        mRingWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ringWidthDp, Resources.getSystem().getDisplayMetrics());
     }
 
     @Override
@@ -33,20 +38,9 @@ public class PentagonDrawable extends Drawable {
 
         float centerX = bounds.exactCenterX();
         float centerY = bounds.exactCenterY();
-        float radius = mSizePx / 2f; // 外接圆半径
-        mPentagonPath.reset();
+        float radius = (mSizePx - mRingWidthPx) / 2f; // 圆环内半径（避免环宽超出边界）
 
-        // 正五边形顶点角度：每个顶点间隔 72°，起始角度 -90°（朝上）
-        for (int i = 0; i < 5; i++) {
-            float angle = (float) (Math.PI * 2 * i / 5 - Math.PI / 2);
-            float x = centerX + radius * (float) Math.cos(angle);
-            float y = centerY + radius * (float) Math.sin(angle);
-            if (i == 0) mPentagonPath.moveTo(x, y);
-            else mPentagonPath.lineTo(x, y);
-        }
-        mPentagonPath.close();
-
-        canvas.drawPath(mPentagonPath, mPaint);
+        canvas.drawCircle(centerX, centerY, radius, mPaint);
     }
 
     @Override public void setAlpha(int alpha) { mPaint.setAlpha(alpha); invalidateSelf(); }

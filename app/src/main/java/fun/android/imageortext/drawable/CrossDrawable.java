@@ -1,4 +1,4 @@
-package fun.android.imageortext;
+package fun.android.imageortext.drawable;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -6,30 +6,29 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
 
-public class RoundedRectDrawable extends Drawable {
+public class CrossDrawable extends Drawable {
     private final Paint mPaint;
-    private final float mSizePx; // 10dp 转换后的像素
-    private final float mCornerRadiusPx; // 圆角大小（dp 转换后）
+    private final float mSizePx;
+    private final float mLineWidthPx; // 线条宽度（dp 转换后）
 
     /**
-     * @param color 颜色（含透明度）
+     * @param color 颜色
      * @param sizeDp 整体大小（10dp）
-     * @param cornerRadiusDp 圆角大小（如 2dp）
+     * @param lineWidthDp 线条宽度（如 2dp）
      */
-    public RoundedRectDrawable(int color, float sizeDp, float cornerRadiusDp) {
+    public CrossDrawable(int color, float sizeDp, float lineWidthDp) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(color);
+        mPaint.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, lineWidthDp, Resources.getSystem().getDisplayMetrics()));
+        mPaint.setStrokeCap(Paint.Cap.ROUND); // 线条端点圆角
 
-        // dp 转像素
         mSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeDp, Resources.getSystem().getDisplayMetrics());
-        mCornerRadiusPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, cornerRadiusDp, Resources.getSystem().getDisplayMetrics());
+        mLineWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, lineWidthDp, Resources.getSystem().getDisplayMetrics());
     }
 
     @Override
@@ -37,11 +36,14 @@ public class RoundedRectDrawable extends Drawable {
         Rect bounds = getBounds();
         if (bounds.isEmpty()) return;
 
-        // 绘制圆角矩形（居中显示）
-        float left = bounds.left + (bounds.width() - mSizePx) / 2f;
-        float top = bounds.top + (bounds.height() - mSizePx) / 2f;
-        RectF rectF = new RectF(left, top, left + mSizePx, top + mSizePx);
-        canvas.drawRoundRect(rectF, mCornerRadiusPx, mCornerRadiusPx, mPaint);
+        float centerX = bounds.exactCenterX();
+        float centerY = bounds.exactCenterY();
+        float halfLength = (mSizePx - mLineWidthPx) / 2f; // 线条长度（减去线宽避免超出边界）
+
+        // 绘制水平线（左右方向）
+        canvas.drawLine(centerX - halfLength, centerY, centerX + halfLength, centerY, mPaint);
+        // 绘制垂直线（上下方向）
+        canvas.drawLine(centerX, centerY - halfLength, centerX, centerY + halfLength, mPaint);
     }
 
     @Override public void setAlpha(int alpha) { mPaint.setAlpha(alpha); invalidateSelf(); }

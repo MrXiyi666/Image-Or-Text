@@ -1,29 +1,35 @@
-package fun.android.imageortext;
+package fun.android.imageortext.drawable;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
 
-public class HexagonDrawable extends Drawable {
+public class RoundedRectDrawable extends Drawable {
     private final Paint mPaint;
-    private final Path mHexagonPath;
-    private final float mSizePx;
+    private final float mSizePx; // 10dp 转换后的像素
+    private final float mCornerRadiusPx; // 圆角大小（dp 转换后）
 
-    public HexagonDrawable(int color, float sizeDp) {
+    /**
+     * @param color 颜色（含透明度）
+     * @param sizeDp 整体大小（10dp）
+     * @param cornerRadiusDp 圆角大小（如 2dp）
+     */
+    public RoundedRectDrawable(int color, float sizeDp, float cornerRadiusDp) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(color);
 
+        // dp 转像素
         mSizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeDp, Resources.getSystem().getDisplayMetrics());
-        mHexagonPath = new Path();
+        mCornerRadiusPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, cornerRadiusDp, Resources.getSystem().getDisplayMetrics());
     }
 
     @Override
@@ -31,22 +37,11 @@ public class HexagonDrawable extends Drawable {
         Rect bounds = getBounds();
         if (bounds.isEmpty()) return;
 
-        float centerX = bounds.exactCenterX();
-        float centerY = bounds.exactCenterY();
-        float radius = mSizePx / 2f; // 外接圆半径
-        mHexagonPath.reset();
-
-        // 正六边形顶点角度：间隔 60°
-        for (int i = 0; i < 6; i++) {
-            float angle = (float) (Math.PI * 2 * i / 6 - Math.PI / 2);
-            float x = centerX + radius * (float) Math.cos(angle);
-            float y = centerY + radius * (float) Math.sin(angle);
-            if (i == 0) mHexagonPath.moveTo(x, y);
-            else mHexagonPath.lineTo(x, y);
-        }
-        mHexagonPath.close();
-
-        canvas.drawPath(mHexagonPath, mPaint);
+        // 绘制圆角矩形（居中显示）
+        float left = bounds.left + (bounds.width() - mSizePx) / 2f;
+        float top = bounds.top + (bounds.height() - mSizePx) / 2f;
+        RectF rectF = new RectF(left, top, left + mSizePx, top + mSizePx);
+        canvas.drawRoundRect(rectF, mCornerRadiusPx, mCornerRadiusPx, mPaint);
     }
 
     @Override public void setAlpha(int alpha) { mPaint.setAlpha(alpha); invalidateSelf(); }
