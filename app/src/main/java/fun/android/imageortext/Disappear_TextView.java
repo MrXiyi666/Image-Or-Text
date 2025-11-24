@@ -83,51 +83,53 @@ public class Disappear_TextView extends StrokeTextView {
 
     private Drawable getDrawable(){
         int color = Color.parseColor(color_list.get(Fun.随机数(0, color_list.size()-1)));
+        float sizeDp = 5f;
         return switch (Fun.随机数(0, 22)) {
             case 0 ->
-                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.UP);
+                    new TriangleDrawable(color, sizeDp, TriangleDrawable.Orientation.UP);
             case 1 ->
-                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.RIGHT);
+                    new TriangleDrawable(color, sizeDp, TriangleDrawable.Orientation.RIGHT);
             case 2 ->
-                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.DOWN);
+                    new TriangleDrawable(color, sizeDp, TriangleDrawable.Orientation.DOWN);
             case 3 ->
-                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.LEFT);
+                    new TriangleDrawable(color, sizeDp, TriangleDrawable.Orientation.LEFT);
             case 4 ->
-                    new StarDrawable(color, 20f);
+                    new StarDrawable(color, sizeDp);
             case 5 ->
-                    new SquareDrawable(color, 20f);
+                    new SquareDrawable(color, sizeDp);
             case 6 ->
-                    new RoundedRectDrawable(color, 20f, 10f);
+                    new RoundedRectDrawable(color, sizeDp, 10f);
             case 7 ->
-                    new DiamondDrawable(color, 20f);
+                    new DiamondDrawable(color, sizeDp);
             case 8 ->
-                    new PentagonDrawable(color, 20f);
+                    new PentagonDrawable(color, sizeDp);
             case 9 ->
-                    new HexagonDrawable(color, 20f);
+                    new HexagonDrawable(color, sizeDp);
             case 10 ->
-                    new CrossDrawable(color, 20f, 2f);
+                    new CrossDrawable(color, sizeDp, 2f);
             case 11 ->
-                    new RingDrawable(color, 20f, 2f);
+                    new RingDrawable(color, sizeDp, 2f);
             case 12 ->
-                    new FlowerDrawable(color, 20f);
+                    new FlowerDrawable(color, sizeDp);
             case 13 ->
-                    new CakeDrawable(color, 20f);
+                    new CakeDrawable(color, sizeDp);
             case 14 ->
-                    new HeartDrawable(color, 20f);
+                    new HeartDrawable(color, sizeDp);
             case 15 ->
-                    new GiftDrawable(color, 20f);
+                    new GiftDrawable(color, sizeDp);
             case 16 ->
-                    new MoonDrawable(color, 20f);
+                    new MoonDrawable(color, sizeDp);
             case 17 ->
-                    new NoteDrawable(color, 20f);
+                    new NoteDrawable(color, sizeDp);
             case 18 ->
-                    new EighthNoteDrawable(color, 20f);
+                    new EighthNoteDrawable(color, sizeDp);
             case 19 ->
-                    new SixteenthNoteDrawable(color, 20f);
+                    new SixteenthNoteDrawable(color, sizeDp);
             case 20 ->
-                    new RestDrawable(color, 20f);
+                    new RestDrawable(color, sizeDp);
             default ->
-                    new CircleDrawable(color, 20f);
+                    new CircleDrawable(color, sizeDp);
         };
     }
+
 }
