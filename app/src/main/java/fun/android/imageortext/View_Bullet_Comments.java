@@ -28,7 +28,6 @@ public class View_Bullet_Comments extends View_Main{
                 Disappear_TextView disappear_textView = new Disappear_TextView(context);
                 disappear_textView.setText(Static.text[Fun.随机数(0, Static.text.length-1)]);
                 disappear_textView.setTextColor(Color.WHITE);
-                disappear_textView.setTextSize(Fun.sp2px(context, 16));
                 disappear_textView.setView(relati_view);
 
                 handler.postDelayed(this, 10);

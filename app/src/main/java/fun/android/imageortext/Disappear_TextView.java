@@ -6,14 +6,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import com.plattysoft.leonids.ParticleSystem;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import fun.android.imageortext.drawable.CakeDrawable;
 import fun.android.imageortext.drawable.CircleDrawable;
 import fun.android.imageortext.drawable.CrossDrawable;
@@ -58,18 +57,16 @@ public class Disappear_TextView extends StrokeTextView {
 
     public Disappear_TextView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public Disappear_TextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
-    private final List<Drawable> list = new ArrayList<>();
-    private void init(){
-        this.setElevation(1);
-
+    private void init(Context context){
+       this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
     }
     List<String> color_list = Arrays.asList(
             "#FF5E8F",  // 亮粉（高亮度，不暗沉）
