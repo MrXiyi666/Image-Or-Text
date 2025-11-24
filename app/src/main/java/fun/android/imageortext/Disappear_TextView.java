@@ -18,11 +18,18 @@ import fun.android.imageortext.drawable.CakeDrawable;
 import fun.android.imageortext.drawable.CircleDrawable;
 import fun.android.imageortext.drawable.CrossDrawable;
 import fun.android.imageortext.drawable.DiamondDrawable;
+import fun.android.imageortext.drawable.EighthNoteDrawable;
 import fun.android.imageortext.drawable.FlowerDrawable;
+import fun.android.imageortext.drawable.GiftDrawable;
+import fun.android.imageortext.drawable.HeartDrawable;
 import fun.android.imageortext.drawable.HexagonDrawable;
+import fun.android.imageortext.drawable.MoonDrawable;
+import fun.android.imageortext.drawable.NoteDrawable;
 import fun.android.imageortext.drawable.PentagonDrawable;
+import fun.android.imageortext.drawable.RestDrawable;
 import fun.android.imageortext.drawable.RingDrawable;
 import fun.android.imageortext.drawable.RoundedRectDrawable;
+import fun.android.imageortext.drawable.SixteenthNoteDrawable;
 import fun.android.imageortext.drawable.SquareDrawable;
 import fun.android.imageortext.drawable.StarDrawable;
 import fun.android.imageortext.drawable.TriangleDrawable;
@@ -79,37 +86,51 @@ public class Disappear_TextView extends StrokeTextView {
 
     private Drawable getDrawable(){
         int color = Color.parseColor(color_list.get(Fun.随机数(0, color_list.size()-1)));
-        return switch (Fun.随机数(0, 14)) {
+        return switch (Fun.随机数(0, 22)) {
             case 0 ->
-                    new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.UP);
+                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.UP);
             case 1 ->
-                    new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.RIGHT);
+                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.RIGHT);
             case 2 ->
-                    new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.DOWN);
+                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.DOWN);
             case 3 ->
-                    new TriangleDrawable(color, 10f, TriangleDrawable.Orientation.LEFT);
+                    new TriangleDrawable(color, 20f, TriangleDrawable.Orientation.LEFT);
             case 4 ->
-                    new StarDrawable(color, 10f);
+                    new StarDrawable(color, 20f);
             case 5 ->
-                    new SquareDrawable(color, 10f);
+                    new SquareDrawable(color, 20f);
             case 6 ->
-                    new RoundedRectDrawable(color, 10f, 10f);
+                    new RoundedRectDrawable(color, 20f, 10f);
             case 7 ->
-                    new DiamondDrawable(color, 10f);
+                    new DiamondDrawable(color, 20f);
             case 8 ->
-                    new PentagonDrawable(color, 10f);
+                    new PentagonDrawable(color, 20f);
             case 9 ->
-                    new HexagonDrawable(color, 10f);
+                    new HexagonDrawable(color, 20f);
             case 10 ->
-                    new CrossDrawable(color, 10f, 2f);
+                    new CrossDrawable(color, 20f, 2f);
             case 11 ->
-                    new RingDrawable(color, 10f, 2f);
+                    new RingDrawable(color, 20f, 2f);
             case 12 ->
-                    new FlowerDrawable(color, 10f);
+                    new FlowerDrawable(color, 20f);
             case 13 ->
-                    new CakeDrawable(color, 10f);
-            default ->//圆形
-                    new CircleDrawable(color, 10f);
+                    new CakeDrawable(color, 20f);
+            case 14 ->
+                    new HeartDrawable(color, 20f);
+            case 15 ->
+                    new GiftDrawable(color, 20f);
+            case 16 ->
+                    new MoonDrawable(color, 20f);
+            case 17 ->
+                    new NoteDrawable(color, 20f);
+            case 18 ->
+                    new EighthNoteDrawable(color, 20f);
+            case 19 ->
+                    new SixteenthNoteDrawable(color, 20f);
+            case 20 ->
+                    new RestDrawable(color, 20f);
+            default ->
+                    new CircleDrawable(color, 20f);
         };
     }
 }

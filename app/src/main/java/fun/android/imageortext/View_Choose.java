@@ -20,9 +20,13 @@ public class View_Choose extends View_Main{
         });
 
         button_start.setOnClickListener(V->{
-            if(!Static.img_name.isEmpty()){
-                new View_Bullet_Comments(context);
+            if(Static.img_name == null){
+                return;
             }
+            if(Static.img_name.isEmpty()){
+               return;
+            }
+            new View_Bullet_Comments(context);
         });
         Fun.addView(view);
     }
