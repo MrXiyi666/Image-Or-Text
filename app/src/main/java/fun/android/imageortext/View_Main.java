@@ -1,7 +1,6 @@
 package fun.android.imageortext;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 
 public class View_Main {

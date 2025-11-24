@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImageOrText">
         <activity
+            android:keepScreenOn="true"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

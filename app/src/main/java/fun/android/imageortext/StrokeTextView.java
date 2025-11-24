@@ -81,19 +81,4 @@ public class StrokeTextView extends AppCompatTextView {
         super.onDraw(canvas);
     }
 
-    // 可选：对外提供方法修改描边属性
-    public void setStrokeColor(int color) {
-        if (borderText != null) {
-            borderText.getPaint().setColor(color);
-            invalidate();
-        }
-    }
-
-    public void setStrokeWidth(float widthDp) {
-        if (borderText != null) {
-            float widthPx = Fun.dp2px(getContext(), widthDp);
-            borderText.getPaint().setStrokeWidth(widthPx);
-            invalidate();
-        }
-    }
 }
